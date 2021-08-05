@@ -25,23 +25,23 @@ public class BookStepDefinitions {
 	private String ENDPOINT_GET_BOOK_BY_ISBN = "https://www.googleapis.com/books/v1/volumes";
 
 
-	@Given("a book exists with an isbn of (.*)")
+	@Given("^a book exists with an isbn of (.*)$")
 	public void a_book_exists_with_isbn(String isbn){
 		request = given().param("q", "isbn:" + isbn);
 	}
 
-	@When("a user retrieves the book by isbn")
+	@When("^a user retrieves the book by isbn$")
 	public void a_user_retrieves_the_book_by_isbn(){
 		response = request.when().get(ENDPOINT_GET_BOOK_BY_ISBN);
 		System.out.println("response: " + response.prettyPrint());
 	}
 
-	@Then("the status code is (\\d+)")
+	@Then("^the status code is (\\d+)$")
 	public void verify_status_code(int statusCode){
 		json = response.then().statusCode(statusCode);
 	}
 
-	@And("response includes the following$")
+	@And("^response includes the following$")
 	public void response_equals(Map<String,String> responseFields){
 		for (Map.Entry<String, String> field : responseFields.entrySet()) {
 			if(StringUtils.isNumeric(field.getValue())){
@@ -53,7 +53,7 @@ public class BookStepDefinitions {
 		}
 	}
 
-	@And("response includes the following in any order")
+	@And("^response includes the following in any order$")
 	public void response_contains_in_any_order(Map<String,String> responseFields){
 		for (Map.Entry<String, String> field : responseFields.entrySet()) {
 			if(StringUtils.isNumeric(field.getValue())){
